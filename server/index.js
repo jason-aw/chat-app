@@ -3,6 +3,7 @@ const http = require('http');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const socketio = require('socket.io');
 const LocalStrategy = require('passport-local').Strategy;
@@ -36,6 +37,11 @@ app.use(session({
     secret: COOKIE_SECRET,
     saveUninitialized: false,
     resave: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.DB_URI,
+        ttl: 6 * 60 * 60,
+        autoRemove: 'native'
+    })
 }));
 
 /* PASSPORT.JS */

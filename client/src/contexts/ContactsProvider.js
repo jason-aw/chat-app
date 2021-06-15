@@ -1,20 +1,24 @@
 import React, { useCallback, useContext, useState } from 'react';
 import axios from 'axios';
 
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
+const API_ENDPOINT = process.env.API_ENDPOINT || 'http://localhost:5000';
 const ContactsContext = React.createContext();
 
 export function useContacts() {
     return useContext(ContactsContext);
 }
 
-export function ContactsProvider({ id, children }) {
-    // const [contacts, setContacts] = useLocalStorage('contacts', []);
+export function ContactsProvider({ children }) {
     const [contacts, setContacts] = useState([]);
     const [contactsLoaded, setContactsLoaded] = useState(false);
 
     // get data from db
     const getContacts = useCallback(async () => {
-        const url = 'http://localhost:5000/api/conversations/get-contacts';
+        const url = API_ENDPOINT + '/api/conversations/get-contacts';
         try {
             const res = await axios.get(url, { withCredentials: true });
             setContacts(res.data);
@@ -25,7 +29,7 @@ export function ContactsProvider({ id, children }) {
     }, [setContacts, setContactsLoaded]);
 
     async function createContact(addUserId, name) {
-        const url = 'http://localhost:5000/api/conversations/add-contact';
+        const url = API_ENDPOINT + '/api/conversations/add-contact';
         const data = {
             id: addUserId,
             name: name,
