@@ -1,11 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react';
 import axios from 'axios';
 
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
-
-const API_ENDPOINT = process.env.API_ENDPOINT || 'http://localhost:5000';
+const API_ENDPOINT = require('../config');
 const ContactsContext = React.createContext();
 
 export function useContacts() {
