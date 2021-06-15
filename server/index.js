@@ -9,7 +9,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/User');
 const Conversation = require('./models/Conversation');
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 const CLIENT_ENDPOINT = process.env.CLIENT_ENDPOINT || 'http://localhost:3000';
 const PORT = process.env.PORT || 5000;

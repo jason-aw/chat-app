@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 const API_ENDPOINT = process.env.API_ENDPOINT || 'http://localhost:5000';
 const AuthContext = React.createContext();
